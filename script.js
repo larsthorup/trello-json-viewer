@@ -1,37 +1,42 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const jsonInput = document.getElementById('jsonInput');
-    const markdownOutput = document.getElementById('markdownOutput');
-    const preview = document.getElementById('preview');
-
-    // Focus the input field
-    jsonInput.focus();
-
-    // Configure marked to properly render task lists
+// Configure marked if it's available (browser environment)
+if (typeof marked !== 'undefined') {
     marked.setOptions({
         gfm: true,
         breaks: true,
         headerIds: true
     });
+}
 
-    jsonInput.addEventListener('input', () => {
-        try {
-            const jsonData = JSON.parse(jsonInput.value);
-            const markdown = convertTrelloToMarkdown(jsonData);
-            markdownOutput.value = markdown;
-            preview.innerHTML = marked.parse(markdown);
-        } catch (error) {
-            if (jsonInput.value.trim() !== '') {
-                markdownOutput.value = 'Invalid JSON';
-                preview.innerHTML = '<p style="color: red;">Invalid JSON</p>';
-            } else {
-                markdownOutput.value = '';
-                preview.innerHTML = '';
+// Browser-specific code
+if (typeof document !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', () => {
+        const jsonInput = document.getElementById('jsonInput');
+        const markdownOutput = document.getElementById('markdownOutput');
+        const preview = document.getElementById('preview');
+
+        // Focus the input field
+        jsonInput.focus();
+
+        jsonInput.addEventListener('input', () => {
+            try {
+                const jsonData = JSON.parse(jsonInput.value);
+                const markdown = convertTrelloToMarkdown(jsonData);
+                markdownOutput.value = markdown;
+                preview.innerHTML = marked.parse(markdown);
+            } catch (error) {
+                if (jsonInput.value.trim() !== '') {
+                    markdownOutput.value = 'Invalid JSON';
+                    preview.innerHTML = '<p style="color: red;">Invalid JSON</p>';
+                } else {
+                    markdownOutput.value = '';
+                    preview.innerHTML = '';
+                }
             }
-        }
+        });
     });
-});
+}
 
-function convertTrelloToMarkdown(data) {
+export function convertTrelloToMarkdown(data) {
     let markdown = '';
 
     // Add board name
@@ -98,19 +103,15 @@ function convertTrelloToMarkdown(data) {
                         }
                         
                         // Add checklists
-                        if (card.idChecklists && card.idChecklists.length > 0) {
-                            card.idChecklists.forEach(checklistId => {
-                                const checklist = checklistsById[checklistId];
-                                if (checklist) {
-                                    markdown += `#### ${checklist.name}\n\n`;
-                                    // Sort checkItems by position
-                                    const sortedItems = [...checklist.checkItems].sort((a, b) => a.pos - b.pos);
-                                    sortedItems.forEach(item => {
-                                        const checkbox = item.state === 'complete' ? '[x]' : '[ ]';
-                                        markdown += `${checkbox} ${item.name}\n`;
-                                    });
-                                    markdown += '\n';
-                                }
+                        if (data.checklists) {
+                            const cardChecklists = data.checklists.filter(checklist => checklist.idCard === card.id);
+                            cardChecklists.forEach(checklist => {
+                                markdown += `#### ${checklist.name}\n\n`;
+                                checklist.checkItems.forEach(item => {
+                                    const checkbox = item.state === 'complete' ? '[x]' : '[ ]';
+                                    markdown += `- ${checkbox} ${item.name}\n`;
+                                });
+                                markdown += '\n';
                             });
                         }
                         

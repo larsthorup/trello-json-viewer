@@ -1,21 +1,56 @@
 {
-    "name": "John Doe",
-    "age": 30,
-    "isActive": true,
-    "address": {
-        "street": "123 Main St",
-        "city": "New York",
-        "zipCode": "10001"
+  "name": "Test Board",
+  "desc": "Test board description",
+  "lists": [
+    {
+      "id": "list1",
+      "name": "To Do",
+      "pos": 1000,
+      "closed": false
     },
-    "hobbies": ["reading", "gaming", "coding"],
-    "scores": [95, 87, 92],
-    "metadata": {
-        "createdAt": "2024-03-20",
-        "tags": ["user", "premium"],
-        "settings": {
-            "notifications": true,
-            "theme": "dark"
+    {
+      "id": "list2",
+      "name": "Done",
+      "pos": 2000,
+      "closed": false
+    }
+  ],
+  "cards": [
+    {
+      "id": "card1",
+      "name": "Test Card",
+      "desc": "Test card description",
+      "idList": "list1",
+      "pos": 1000,
+      "closed": false,
+      "due": "2024-03-20T12:00:00.000Z",
+      "labels": [
+        {
+          "name": "Important",
+          "color": "red"
         }
-    },
-    "nullValue": null
+      ]
+    }
+  ],
+  "checklists": [
+    {
+      "id": "checklist1",
+      "name": "Test Checklist",
+      "idCard": "card1",
+      "checkItems": [
+        {
+          "id": "item1",
+          "name": "Test Item 1",
+          "state": "complete",
+          "pos": 1000
+        },
+        {
+          "id": "item2",
+          "name": "Test Item 2",
+          "state": "incomplete",
+          "pos": 2000
+        }
+      ]
+    }
+  ]
 } 
