@@ -1,0 +1,56 @@
+# Trello JSON Viewer
+
+A simple web application that converts Trello JSON export files into a readable markdown format with a live preview.
+
+## Features
+
+- Input area for pasting Trello JSON export
+- Automatic conversion to markdown
+- Live preview of the rendered markdown
+- Support for:
+  - Board name and description
+  - Lists and cards
+  - Card descriptions
+  - Checklists with completion status
+  - Labels
+  - Due dates
+
+## Development History
+
+The project was developed using Cursor exclusively through the following prompts:
+
+1. "create a html page to preview export files from trello. the page should have a text area where the trello export json file can be pasted. after the user inputs valid json it should be converted into markdown and shown in another text area. finally a div should contain the markdown rendered as html"
+
+2. "the json contains checklists inside cards which should be converted to markdown lists"
+
+3. "create a node program to extract the schema from a json file"
+
+4. "run "node script.js export.json > schema.json""
+
+5. "the checklists do not render correctly. use schema.json to understand how the input data is represented"
+
+6. "create a table-of-contents showing the lists"
+
+7. "make the input field have focus"
+
+## Project Structure
+
+- `index.html` - Main HTML file with the user interface
+- `styles.css` - CSS styles for the application
+- `script.js` - JavaScript code for JSON to Markdown conversion
+- `schema.json` - JSON schema for Trello export format
+
+## Usage
+
+1. Open `index.html` in a web browser
+2. Paste your Trello JSON export into the input textarea
+3. The markdown will be automatically generated and displayed in the middle textarea
+4. The preview will show the rendered HTML version below
+
+## Technical Details
+
+The application uses:
+- Vanilla JavaScript for JSON parsing and Markdown conversion
+- Marked.js library for Markdown rendering
+- Modern CSS for styling
+- Responsive design that works on all screen sizes 
