@@ -1,0 +1,21 @@
+{
+    "name": "John Doe",
+    "age": 30,
+    "isActive": true,
+    "address": {
+        "street": "123 Main St",
+        "city": "New York",
+        "zipCode": "10001"
+    },
+    "hobbies": ["reading", "gaming", "coding"],
+    "scores": [95, 87, 92],
+    "metadata": {
+        "createdAt": "2024-03-20",
+        "tags": ["user", "premium"],
+        "settings": {
+            "notifications": true,
+            "theme": "dark"
+        }
+    },
+    "nullValue": null
+} 
